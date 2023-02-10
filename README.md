@@ -2,6 +2,18 @@
 WPSPPagination - WP Single Post Pagination
 
 ```PHP
+ // Require Query 
+   $args = [
+	
+	'posts_per_page' => 11,
+	'post_type'      => 'blog',
+	'orderby'        => 'date', // must be query by date OR post_date
+        'order'          => 'DESC', // must be DESC
+	  
+  ];
+
+  $wp_require_query = new WP_Query($args);
+   
  // Usage:
  $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
   
