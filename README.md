@@ -2,7 +2,7 @@
 WPSPPagination - WP Single Post Pagination
 
 ```PHP
- // Require Query 
+ // Main page Require Query 
    $args = [
 	
 	'posts_per_page' => 11,
