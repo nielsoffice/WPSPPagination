@@ -53,9 +53,9 @@
    
    public function __construct( $args = [] )
    {
- 
-	  $this->wp_request_post_type = $args['post_type'] ?? [];
-    $this->wp_sub_directory     = $args['sub_directory'] ?? '';
+    
+     $this->wp_request_post_type = $args['post_type'] ?? [];
+     $this->wp_sub_directory     = $args['sub_directory'] ?? '';
 
    }
 
@@ -63,7 +63,7 @@
     * Defined : Processing pagination title loop
     * @method Private wp_single_post_pagination
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    private function set_wp_single_post_previous_pagination() {  
 
       global $wpdb;
@@ -84,7 +84,7 @@
     * Defined : Processing pagination title loop
     * @method Private wp_single_post_pagination
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    private function set_wp_single_post_next_pagination() { 
    
       global $wpdb;
@@ -117,7 +117,7 @@
     * Defined : Processing pagination title loop
     * @method Private set_wp_sp_pagination_prev_post_title
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    private function set_wp_sp_pagination_prev_post_title() {
 
       global $wpdb;
@@ -134,7 +134,7 @@
     * Defined : Processing pagination title loop
     * @method Private set_wp_sp_pagination_next_post_title
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
     private function set_wp_sp_pagination_next_post_title() {
   
      global $wpdb;
@@ -151,7 +151,7 @@
     * Defined : Processing html collection 
     * @method Private wp_sp_pagination_entity
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    private function wp_sp_pagination_modal_pagination_query( $left = false , $wp_postRequest = false ) {
 
       global $post;
@@ -183,7 +183,7 @@
     * Defined : Process multiple custom post type 
     * @method Private wp_post_type_is_array
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    private function wp_post_type_is_array($post_type_query) {
 
       $wp_post_query_ = [];
@@ -210,28 +210,28 @@
     * Defined : Processing pagination title loop
     * @method Public get_wp_single_post_previous_pagination
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    public function get_wp_single_post_previous_pagination() { return ($this->set_wp_single_post_previous_pagination());}
 
   /** 
     * Defined : Processing pagination title loop
     * @method Public get_wp_single_post_next_pagination
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    public function get_wp_single_post_next_pagination() { return ($this->set_wp_single_post_next_pagination()); }
 
   /** 
     * Defined : Processing pagination title loop
     * @method Public get_wp_sp_pagination_prev_post_title
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    public function get_wp_sp_pagination_prev_post_title() { return ($this->set_wp_sp_pagination_prev_post_title());}
 
   /** 
     * Defined : Processing pagination title loop
     * @method Public get_wp_sp_pagination_next_post_title
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    public function get_wp_sp_pagination_next_post_title() { return ($this->set_wp_sp_pagination_next_post_title()); }
  
  } 
