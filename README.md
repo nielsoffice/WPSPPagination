@@ -14,6 +14,7 @@ WPSPPagination - WP Single Post Pagination
 
   $wp_require_query = new WP_Query($args);
    
+ // On single page 
  // Usage:
  $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
   
