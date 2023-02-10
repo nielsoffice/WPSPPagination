@@ -53,7 +53,7 @@
    
    public function __construct( $args = [] )
    {
-    
+ 
      $this->wp_request_post_type = $args['post_type'] ?? [];
      $this->wp_sub_directory     = $args['sub_directory'] ?? '';
 
@@ -105,7 +105,7 @@
     * Defined : request custom post type url sub directory
     * @method Private wp_domain_sub_directory
     * @since v1.0 
-	  * @since 02.10.2022 **/
+    * @since 02.10.2022 **/
    private function wp_domain_sub_directory($sub_directory) {
      
     $set_wp_domain_sub_directory = ( empty($sub_directory) ) ? '' : '/'.$sub_directory.'';
@@ -116,7 +116,7 @@
   /** 
     * Defined : Processing pagination title loop
     * @method Private set_wp_sp_pagination_prev_post_title
-    * @since v1.0 
+    * @since v1.0   
     * @since 02.10.2022 **/
    private function set_wp_sp_pagination_prev_post_title() {
 
