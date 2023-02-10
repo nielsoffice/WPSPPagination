@@ -16,4 +16,48 @@ WPSPPagination - WP Single Post Pagination
  // Render the post title
  echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title());
  echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title());
+ 
+```
+
+```PHP
+  // Prev Page Configartion
+  $prevTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title(); 
+  function getLinkPrev($WP_SINGLE_POST_PAGINATION) {
+  
+    $sb_left = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_previous_pagination();
+   
+    if( !empty($sb_left) ) { return $sb_left;  
+    } else { return '#'; }
+	  
+  }
+  
+  // Next Page configuration
+  $nextTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title(); 
+  function getLinkNext($WP_SINGLE_POST_PAGINATION) {
+  
+    $sb_left = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_next_pagination();
+   
+    if( !empty($sb_left) ) { return $sb_left;  
+    } else { return '#'; }
+	  
+  }
+  
+```
+
+```HTML  
+// HTML
+<div id="sb_pagination_container">	
+<div id="leftPrevious" class="sb-previous">
+	<a href="<?php echo (getLinkPrev($WP_SINGLE_POST_PAHINATION) ); ?>">
+	<?php echo ( !empty($prevTitle) ? $prevTitle : 'No more post!...' )?>
+	</a>	
+</div>
+		
+<div id="leftPrevious" class="sb-previous">
+	<a href="<?php echo (getLinkNext($WP_SINGLE_POST_PAHINATION) ); ?>">
+	<?php echo ( !empty($nextTitle) ? $nextTitle : 'No more post!...' )?>
+	</a>	
+</div>
+</div>	
+ 
 ```
