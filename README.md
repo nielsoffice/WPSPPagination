@@ -20,7 +20,7 @@ WPSPPagination - WP Single Post Pagination
 ```
 
 ```PHP
-  // Prev Page Configartion
+  // Prev Page Configartion Sanitize if the return value is empty!
   $prevTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title(); 
   function getLinkPrev($WP_SINGLE_POST_PAGINATION) {
   
@@ -31,7 +31,7 @@ WPSPPagination - WP Single Post Pagination
 	  
   }
   
-  // Next Page configuration
+  // Next Page configuration Sanitize if the return value is empty!
   $nextTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title(); 
   function getLinkNext($WP_SINGLE_POST_PAGINATION) {
   
@@ -45,19 +45,18 @@ WPSPPagination - WP Single Post Pagination
 ```
 
 ```HTML  
-// HTML
+<!-- rendered HTML -->
 <div id="sb_pagination_container">	
 <div id="leftPrevious" class="sb-previous">
-	<a href="<?php echo (getLinkPrev($WP_SINGLE_POST_PAHINATION) ); ?>">
-	<?php echo ( !empty($prevTitle) ? $prevTitle : 'No more post!...' )?>
-	</a>	
+  <a href="<?php echo (getLinkPrev($WP_SINGLE_POST_PAHINATION) ); ?>">
+  <?php echo ( !empty($prevTitle) ? $prevTitle : 'No more post!...' )?>
+  </a>	
 </div>
 		
 <div id="leftPrevious" class="sb-previous">
-	<a href="<?php echo (getLinkNext($WP_SINGLE_POST_PAHINATION) ); ?>">
-	<?php echo ( !empty($nextTitle) ? $nextTitle : 'No more post!...' )?>
-	</a>	
+  <a href="<?php echo (getLinkNext($WP_SINGLE_POST_PAHINATION) ); ?>">
+  <?php echo ( !empty($nextTitle) ? $nextTitle : 'No more post!...' )?>
+  </a>	
 </div>
 </div>	
- 
 ```
