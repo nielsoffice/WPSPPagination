@@ -19,7 +19,7 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
  $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
   
   'post_type'     => 'post', // for custom post_type ['post','blog','news']
-  'sub_directory' => 'blog'
+  'sub_directory' => 'blog'  // www.domain.com/sub_directory/post-title
 
  ]);
  
