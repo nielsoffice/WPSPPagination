@@ -69,7 +69,7 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
   </a>	
 </div>
 		
-<div id="reightPrevious" class="sb-previous">
+<div id="reightPrevious" class="sb-next">
   <a href="<?php echo (getLinkNext($WP_SINGLE_POST_PAHINATION) ); ?>">
   <?php echo ( !empty($nextTitle) ? $nextTitle : 'No more post!...' )?>
   </a>	
