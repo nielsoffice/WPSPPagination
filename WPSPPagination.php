@@ -56,6 +56,21 @@
    * @since 1.0.0.0 
    * @since 02.10.2023 **/
    private $wp_orderby;
+
+ /**
+   * Defined: @var @property ORDER_REQUEST
+   * @since 1.0.0.0 
+   * @since 02.10.2023 **/
+   private const ORDER_REQUEST = [
+
+      'date',
+      'id',
+      'author',
+      'type',
+      'rand',
+      'comment_count' 
+
+   ];
    
    public function __construct( $args = [] )
    {
@@ -166,33 +181,37 @@
      $order_by = mb_strtolower($this->wp_orderby ,'UTF-8');
      $order_by = (!is_string( $order_by ))?  false :  $order_by;
 
-     var_dump( $order_by );
-
      if( $order_by === false ) { return; }
 
       switch ($order_by) {
 
-        case 'date':
+        // Obviously for date
+        case self::ORDER_REQUEST[0] :
         return $this->wp_pagination_order_by_request( $post->post_date, 'post_date', $left, $wp_postRequest );  
         break;
 
-        case 'id':
+        // Obviously for id
+        case self::ORDER_REQUEST[1] :
         return $this->wp_pagination_order_by_request( $post->ID, 'id', $left, $wp_postRequest ); 
         break;
 
-        case 'author' :
+        // Obviously for author
+        case self::ORDER_REQUEST[2] :
         return $this->wp_pagination_order_by_request( $post->post_author, 'post_author', $left, $wp_postRequest ); 
         break;
 
-        case 'type' :
+        // Obviously for type
+        case self::ORDER_REQUEST[3] :
         return $this->wp_pagination_order_by_request( $post->post_type, 'post_type', $left, $wp_postRequest ); 
         break;
 
-        case 'rand' :
+        // Obviously for rand
+        case self::ORDER_REQUEST[4] :
         return $this->wp_pagination_order_by_request( $post->ID, 'rand', $left, $wp_postRequest ); 
         break;
 
-        case 'comment_count' :
+        // Obviously for commetn_count
+        case self::ORDER_REQUEST[5] :
         return $this->wp_pagination_order_by_request( $post->comment_count, 'comment_count', $left, $wp_postRequest); 
         break;
         
@@ -210,12 +229,16 @@
             Reference: https://developer.wordpress.org/reference/classes/wp_query/#order-orderby-parameters
             
             ";
-
           break;
       }   
 
    }
 
+  /** 
+    * Defined : Query Modal request
+    * @method Private wp_sp_pagination_entity
+    * @since v1.0 
+    * @since 02.10.2022 **/
   private function wp_pagination_order_by_request( $post_order_by_query, $order_by,  $left = false , $wp_postRequest = false ) {
       
     // sanitation !
