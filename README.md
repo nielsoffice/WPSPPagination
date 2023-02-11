@@ -20,7 +20,8 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
   
   'post_type'     => 'post', // for custom post_type ['post','blog','news']
   'sub_directory' => 'blog'  // www.domain.com/sub_directory/post-title
-
+  'orderby'       => 'date'  // date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  
+  
  ]);
  
  // Render the post link
