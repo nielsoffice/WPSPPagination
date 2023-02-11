@@ -7,11 +7,12 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
 	
 	'posts_per_page' => 11,
 	'post_type'      => 'blog',
-	'orderby'        => 'date', // must be query by date OR post_date
+	'orderby'        => 'date', // must be query by 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  
         'order'          => 'DESC', // must be DESC
 	  
   ];
-
+  
+  // Parent page or main page query 
   $wp_require_query = new WP_Query($args);
    
  // On single page 
@@ -20,7 +21,7 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
   
   'post_type'     => 'post', // for custom post_type ['post','blog','news']
   'sub_directory' => 'blog', // www.domain.com/sub_directory/post-title
-  'orderby'       => 'date'  // 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  
+  'orderby'       => 'date'  // 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  make sure the same as parent query!
   
  ]);
  
