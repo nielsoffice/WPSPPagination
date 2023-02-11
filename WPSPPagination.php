@@ -5,7 +5,7 @@
  *
  * MIT License
  *
- * PHPWine\VanillaFlavour v1.4.0.0 free software: you can redistribute it and/or modify.
+ * WP Single Post Pagination v1.2 free software: you can redistribute it and/or modify.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -32,7 +32,7 @@
  * @license   MIT License
  * @link      https://github.com/nielsoffice/WPSPPagination
  * @link      https://github.com/nielsoffice/WPSPPagination
- * @version   v1.0
+ * @version   v1.2
  * @since     02.10.2023
  *
  */
@@ -50,12 +50,19 @@
    * @since 1.0.0.0 
    * @since 02.10.2023 **/
    private $wp_sub_directory;
+
+  /**
+   * Defined: @var @property wp_orderby
+   * @since 1.0.0.0 
+   * @since 02.10.2023 **/
+   private $wp_orderby;
    
    public function __construct( $args = [] )
    {
  
      $this->wp_request_post_type = $args['post_type'] ?? [];
-     $this->wp_sub_directory     = $args['sub_directory'] ?? '';
+     $this->wp_sub_directory = $args['sub_directory'] ?? '';    
+     $this->wp_orderby = $args['orderby'] ?? '';
 
    }
 
@@ -68,7 +75,7 @@
 
       global $wpdb;
 
-      $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query());
+      $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query(false, false ));
       $wp_request = json_decode(json_encode($wp_request), true);	
       $wp_request = $wp_request[0]['post_name'];
 
@@ -89,7 +96,7 @@
    
       global $wpdb;
 
-      $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query( true ));
+      $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query( true , false));
       $wp_request = json_decode(json_encode($wp_request), true);	
       $wp_request = $wp_request[0]['post_name'];
 
@@ -125,8 +132,8 @@
       $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query(false, true));
       $wp_request = json_decode(json_encode($wp_request), true);	
       $wp_request = $wp_request[0]['post_title'];
-  
-      return ($wp_request);
+
+      return $wp_request;
   
     }
   
@@ -143,8 +150,8 @@
      $wp_request = json_decode(json_encode($wp_request), true);	
      $wp_request = $wp_request[0]['post_title'];
   
-     return ($wp_request);
-  
+     return $wp_request; 
+
    }
 
   /** 
@@ -152,32 +159,97 @@
     * @method Private wp_sp_pagination_entity
     * @since v1.0 
     * @since 02.10.2022 **/
-   private function wp_sp_pagination_modal_pagination_query( $left = false , $wp_postRequest = false ) {
-
-      global $post;
+   private function wp_sp_pagination_modal_pagination_query( $left, $wp_postRequest ) {
       
-      $post_type_query = is_array($this->wp_request_post_type ) ? $this->wp_request_post_type : $this->wp_request_post_type;
-      $post_prev_next_condition  = (!$left === false) ? '<' : '>';
-      $post_prev_next_order      = (!$left === false) ? 'DESC' : 'ASC';
-      $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
+     global $post;
 
-      $post_date_query = $post->post_date;
+     $order_by = mb_strtolower($this->wp_orderby ,'UTF-8');
+     $order_by = (!is_string( $order_by ))?  false :  $order_by;
 
-      $wp_post_query_  = '';
-      
-      $wp_post_query_ .= " SELECT $post_wp_postRequest_title ";
-      $wp_post_query_ .= " FROM wp_posts ";
-      $wp_post_query_ .= " WHERE post_status = 'publish' ";
-      $wp_post_query_ .= " AND post_date $post_prev_next_condition '". $post_date_query ."' "; 
+     var_dump( $order_by );
 
-      $wp_post_query_ .= implode('', $this->wp_post_type_is_array($post_type_query)[0]);
-   
-      $wp_post_query_ .= " ORDER BY post_date ";
-      $wp_post_query_ .= " $post_prev_next_order LIMIT 1 ";
-     
-      return $wp_post_query_;
+     if( $order_by === false ) { return; }
+
+      switch ($order_by) {
+
+        case 'date':
+        return $this->wp_pagination_order_by_request( $post->post_date, 'post_date', $left, $wp_postRequest );  
+        break;
+
+        case 'id':
+        return $this->wp_pagination_order_by_request( $post->ID, 'id', $left, $wp_postRequest ); 
+        break;
+
+        case 'author' :
+        return $this->wp_pagination_order_by_request( $post->post_author, 'post_author', $left, $wp_postRequest ); 
+        break;
+
+        case 'type' :
+        return $this->wp_pagination_order_by_request( $post->post_type, 'post_type', $left, $wp_postRequest ); 
+        break;
+
+        case 'rand' :
+        return $this->wp_pagination_order_by_request( $post->ID, 'rand', $left, $wp_postRequest ); 
+        break;
+
+        case 'comment_count' :
+        return $this->wp_pagination_order_by_request( $post->comment_count, 'comment_count', $left, $wp_postRequest); 
+        break;
+        
+        default:
+          return "Invalid request orderby list avaliable are 
+            [ 
+              'orderby' => 'date' 
+              'orderby' => 'id' 
+              'orderby' => 'author' 
+              'orderby' => 'type' 
+              'orderby' => 'rand' 
+              'orderby' => 'comment_count'           
+            ]
+            
+            Reference: https://developer.wordpress.org/reference/classes/wp_query/#order-orderby-parameters
+            
+            ";
+
+          break;
+      }   
 
    }
+
+  private function wp_pagination_order_by_request( $post_order_by_query, $order_by,  $left = false , $wp_postRequest = false ) {
+      
+    // sanitation !
+    $post_type_query = is_array($this->wp_request_post_type ) ? $this->wp_request_post_type : $this->wp_request_post_type;
+    $post_prev_next_condition  = (!$left === false) ? '<' : '>';
+    $post_prev_next_order      = (!$left === false) ? 'DESC' : 'ASC';
+    $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
+    $post_wp_rand_id           = ( (!empty($order_by) && $order_by === 'rand') ) ?  'id' : $order_by;
+    $post_wp_rand              = ( (!empty($order_by) && $order_by === 'rand') ) ? 'rand()': (((!empty($order_by) && $order_by === 'post_author')) ? 'post_date' : $order_by) ;
+    $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
+       
+    // Post author 
+    $wp_post_author_post_prev_next_condition = ( (!empty($order_by) && $order_by === 'post_author') ) ?  '=' : $post_prev_next_condition; 
+
+    // remove condition and post order request ex $post->ID if the post->post_title !
+    // remove the title itself and post order request ex $post->ID if the post->post_title !
+    $wp_post_author_post_prevnextcondition = (  $order_by === 'post_title'  || $order_by === 'post_name' ) ? false : 'AND '.$post_wp_rand_id.' '.$wp_post_author_post_prev_next_condition;
+    $post_date_query_ = ( $order_by === 'post_title' || $order_by === 'post_name') ? false : " '$post_order_by_query' ";
+
+    // Return query pagination by request !
+    $wp_post_query_  = '';
+    $wp_post_query_ .= " SELECT $post_wp_postRequest_title ";
+    $wp_post_query_ .= " FROM wp_posts ";
+    $wp_post_query_ .= " WHERE post_status = 'publish' ";
+    $wp_post_query_ .= " $wp_post_author_post_prevnextcondition ";
+    $wp_post_query_ .= " $post_date_query_ "; 
+    $wp_post_query_ .=   $post_type_query_array;
+    $wp_post_query_ .= " ORDER BY $post_wp_rand ";
+    $wp_post_query_ .= " $post_prev_next_order LIMIT 1 ";
+     
+    return $wp_post_query_;
+
+  } 
+
 
   /** 
     * Defined : Process multiple custom post type 
@@ -235,5 +307,4 @@
    public function get_wp_sp_pagination_next_post_title() { return ($this->set_wp_sp_pagination_next_post_title()); }
  
  } 
-
 
