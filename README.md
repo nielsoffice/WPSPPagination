@@ -41,7 +41,7 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
     $sb_left = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_previous_pagination();
    
     if( !empty($sb_left) ) { return $sb_left;  
-    } else { return '#'; }
+    } else { return; }
 	  
   }
   
@@ -52,7 +52,7 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
     $sb_left = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_next_pagination();
    
     if( !empty($sb_left) ) { return $sb_left;  
-    } else { return '#'; }
+    } else { return; }
 	  
   }
   
