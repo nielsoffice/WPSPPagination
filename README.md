@@ -49,9 +49,9 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
   $nextTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title(); 
   function getLinkNext($WP_SINGLE_POST_PAGINATION) {
   
-    $sb_left = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_next_pagination();
+    $sb_right = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_next_pagination();
    
-    if( !empty($sb_left) ) { return $sb_left;  
+    if( !empty($sb_right) ) { return $sb_right;  
     } else { return; }
 	  
   }
