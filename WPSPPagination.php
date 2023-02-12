@@ -216,11 +216,7 @@
      $wp_request = json_decode(json_encode($wp_request), true);	
      $wp_request = $wp_request[0]['post_title'];
 
-     $currentURL = $this->wp_domain_sub_directory( $this->wp_sub_directory );
-     $currentURL .= '/';
-     $currentURL .= $wp_request;
-
-     return ($currentURL);
+     return ($wp_request);
      
     } else {
   
@@ -244,7 +240,7 @@
       global $post;
       global $wpdb;
   
-      if( !is_null($link) && $link !== 'get_post_link_last') : return ' Invalid agurment | require : '. self::GET_POSTS_LINK[3]; exit; endif;
+      if( !is_null($link) && $link !== 'get_post_title_last') : return ' Invalid agurment | require : '. self::GET_POSTS_LINK[3]; exit; endif;
      
       // get_post_link_last then !
       if( $link === self::GET_POSTS_LINK[3] ) {
@@ -255,12 +251,8 @@
        $wp_request = $wpdb->get_results($this->wp_pagination_query_post_request_next($post->post_type,$this->wp_set_order_by_link_post_first(), true ));
        $wp_request = json_decode(json_encode($wp_request), true);	
        $wp_request = $wp_request[0]['post_title'];
-  
-       $currentURL = $this->wp_domain_sub_directory( $this->wp_sub_directory );
-       $currentURL .= '/';
-       $currentURL .= $wp_request;
-  
-       return ($currentURL);
+         
+       return ($wp_request);
   
       } else {
   
@@ -503,28 +495,27 @@
     * @method Public get_wp_single_post_previous_pagination
     * @since v1.0 
     * @since 02.10.2022 **/
-   public function get_wp_single_post_previous_pagination() { return ($this->set_wp_single_post_previous_pagination());}
+   public function get_wp_single_post_previous_pagination( $link = null ) { return ($this->set_wp_single_post_previous_pagination($link));}
 
   /** 
     * Defined : Processing pagination title loop
     * @method Public get_wp_single_post_next_pagination
     * @since v1.0 
     * @since 02.10.2022 **/
-   public function get_wp_single_post_next_pagination() { return ($this->set_wp_single_post_next_pagination()); }
+   public function get_wp_single_post_next_pagination( $link = null ) { return ($this->set_wp_single_post_next_pagination($link)); }
 
   /** 
     * Defined : Processing pagination title loop
     * @method Public get_wp_sp_pagination_prev_post_title
     * @since v1.0 
     * @since 02.10.2022 **/
-   public function get_wp_sp_pagination_prev_post_title() { return ($this->set_wp_sp_pagination_prev_post_title());}
+   public function get_wp_sp_pagination_prev_post_title( $link = null ) { return ($this->set_wp_sp_pagination_prev_post_title($link));}
 
   /** 
     * Defined : Processing pagination title loop
     * @method Public get_wp_sp_pagination_next_post_title
     * @since v1.0 
     * @since 02.10.2022 **/
-   public function get_wp_sp_pagination_next_post_title() { return ($this->set_wp_sp_pagination_next_post_title()); }
+   public function get_wp_sp_pagination_next_post_title( $link = null ) { return ($this->set_wp_sp_pagination_next_post_title($link)); }
 
  } 
-
