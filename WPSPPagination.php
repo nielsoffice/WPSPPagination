@@ -382,7 +382,7 @@
     $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
 
     $wp_first_query  = "";
-	  $wp_first_query .= " SELECT $post_wp_postRequest_title ";
+    $wp_first_query .= " SELECT $post_wp_postRequest_title ";
     $wp_first_query .= " FROM wp_posts ";
     $wp_first_query .= " WHERE post_status = 'publish' ";
     $wp_first_query .= " $post_type_query_array ";    
@@ -404,7 +404,7 @@
     $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
 
     $wp_first_query  = "";
-	  $wp_first_query .= " SELECT $post_wp_postRequest_title ";
+    $wp_first_query .= " SELECT $post_wp_postRequest_title ";
     $wp_first_query .= " FROM wp_posts ";
     $wp_first_query .= " WHERE post_status = 'publish' ";
     $wp_first_query .= " $post_type_query_array ";    
