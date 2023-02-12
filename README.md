@@ -28,10 +28,18 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
  // Render the post link
  echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination());
  echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination());
-  
+
+ // Get post link First and Last
+ echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination('get_post_link_first'));
+ echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination('get_post_link_last'));
+ 
  // Render the post title
  echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title());
  echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title());
+ 
+ // Get post title First and Last
+ echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_first'));
+ echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title('get_post_title_last'));
  
 ```
 
