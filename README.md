@@ -46,23 +46,27 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
 ```PHP
   // Prev Page Configartion Sanitize if the return value is empty!
   $prevTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title(); 
+  $wp_firstTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_first'));
   function getLinkPrev($WP_SINGLE_POST_PAGINATION) {
   
-    $sb_left = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_previous_pagination();
+    $wp_left = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_previous_pagination();
+    $wp_firstLink = $WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination('get_post_link_first');
    
-    if( !empty($sb_left) ) { return $sb_left;  
-    } else { return; }
+    if( !empty($wp_left) ) { return $wp_left;  
+    } else { return $wp_firstLink; }
 	  
   }
   
   // Next Page configuration Sanitize if the return value is empty!
   $nextTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title(); 
+  $wp_LastTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_last'));
   function getLinkNext($WP_SINGLE_POST_PAGINATION) {
   
     $sb_right = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_next_pagination();
+    $wp_firstLink = $WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination('get_post_link_last');
    
     if( !empty($sb_right) ) { return $sb_right;  
-    } else { return; }
+    } else { return  $wp_firstLink; }
 	  
   }
   
@@ -80,6 +84,23 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
 <div id="reightPrevious" class="sb-next">
   <a href="<?php echo (getLinkNext($WP_SINGLE_POST_PAHINATION) ); ?>">
   <?php echo ( !empty($nextTitle) ? $nextTitle : 'No more post!...' )?>
+  </a>	
+</div>
+</div>	
+```
+
+```HTML  
+<!-- rendered HTML  return last Title and Last link post !-->
+<div id="sb_pagination_container">	
+<div id="leftPrevious" class="sb-previous">
+  <a href="<?php echo (getLinkPrev($WP_SINGLE_POST_PAHINATION) ); ?>">
+  <?php echo ( !empty($prevTitle) ? $prevTitle : $wp_firstTitle )?>
+  </a>	
+</div>
+		
+<div id="reightPrevious" class="sb-next">
+  <a href="<?php echo (getLinkNext($WP_SINGLE_POST_PAHINATION) ); ?>">
+  <?php echo ( !empty($nextTitle) ? $nextTitle : $wp_LastTitle )?>
   </a>	
 </div>
 </div>	
