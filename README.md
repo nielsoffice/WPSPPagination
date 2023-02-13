@@ -139,12 +139,14 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
 
 <!-- rendered HTML  return last Title and Last link post !-->
 <div id="sb_pagination_container">	
+<h6 class="sb-heading-label-pagi">Read previous posted article</h6>		
 <div id="leftPrevious" class="sb-previous">
   <a href="<?php echo ($leftPreviousLink); ?>">  
     <?php echo !empty($prevTitle) ? '← '.$prevTitle : '← '.$lastTitle; ?>
   </a>	
 </div>
-		
+	
+<h6 class="sb-heading-label-pagi">Read next posted article</h6>	
 <div id="RightNext" class="sb-next">
   <a href="<?php echo ($rightNextLink); ?>">
    <?php echo !empty($nextTitle) ? '→ '.$nextTitle : '→ '.$firstTitle; ?>
