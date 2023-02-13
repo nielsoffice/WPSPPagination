@@ -46,27 +46,24 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
 ```PHP
   // Prev Page Configartion Sanitize if the return value is empty!
   $prevTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title(); 
-  $wp_firstTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_first'));
   function getLinkPrev($WP_SINGLE_POST_PAGINATION) {
   
     $wp_left = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_previous_pagination();
-    $wp_firstLink = $WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination('get_post_link_first');
-   
+ 
     if( !empty($wp_left) ) { return $wp_left;  
-    } else { return $wp_firstLink; }
+    } return;
 	  
   }
   
   // Next Page configuration Sanitize if the return value is empty!
   $nextTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title(); 
-  $wp_LastTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_last'));
-  function getLinkNext($WP_SINGLE_POST_PAGINATION) {
+   function getLinkNext($WP_SINGLE_POST_PAGINATION) {
   
     $sb_right = $WP_SINGLE_POST_PAGINATION->get_wp_single_post_next_pagination();
     $wp_firstLink = $WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination('get_post_link_last');
    
     if( !empty($sb_right) ) { return $sb_right;  
-    } else { return  $wp_firstLink; }
+    } return;
 	  
   }
   
@@ -89,19 +86,70 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
 </div>	
 ```
 
+<h5> Get Last and First Pagination </h5>
+
+```PHP
+<?php 
+
+   $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
+  
+     'post_type' => 'post', // for custom post_type ['post','blog','news']
+     'orderby'   => 'date'  	  
+
+   ]);
+    
+   // this post if end post means last posr item
+   $cD = get_site_url() .'/';
+
+   // Prev Page Configartion Sanitize if the return value is empty!
+   $prevTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title(); 
+   $lastTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title('get_post_title_last');
+   function getLinkPrev($WP_SINGLE_POST) {
+     
+    $sb_left = $WP_SINGLE_POST->get_wp_single_post_previous_pagination();
+    if( !empty($sb_left) ) { return $sb_left;  }
+	  return;
+	
+   }
+   
+   $sb_lastLink      = $WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination('get_post_link_last');
+   $leftPreviousLink = getLinkPrev($WP_SINGLE_POST_PAHINATION);
+   $leftPreviousLink = ( $leftPreviousLink === $cD )? $sb_lastLink : $leftPreviousLink;
+	
+
+  // Next Page configuration Sanitize if the return value is empty!
+  $nextTitle  = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title();
+  $firstTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_first');
+  function getLinkNext($WP_SINGLE_POST) {
+  
+	 $sb_right = $WP_SINGLE_POST->get_wp_single_post_next_pagination();
+     if( !empty($sb_right) ) { return $sb_right; } 
+	 return; 
+	
+  }
+
+  $sb_FirsLink   = ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination('get_post_link_first'));
+  $rightNextLink = getLinkNext($WP_SINGLE_POST_PAHINATION);
+  $rightNextLink = ( $rightNextLink === $cD ) ? $sb_FirsLink : $rightNextLink;
+ 	
+?>
+```
+
 ```HTML  
+
 <!-- rendered HTML  return last Title and Last link post !-->
 <div id="sb_pagination_container">	
 <div id="leftPrevious" class="sb-previous">
-  <a href="<?php echo (getLinkPrev($WP_SINGLE_POST_PAHINATION) ); ?>">
-  <?php echo ( !empty($prevTitle) ? $prevTitle : $wp_firstTitle )?>
+  <a href="<?php echo ($leftPreviousLink); ?>">  
+    <?php echo !empty($prevTitle) ? '← '.$prevTitle : '← '.$lastTitle; ?>
   </a>	
 </div>
 		
-<div id="reightPrevious" class="sb-next">
-  <a href="<?php echo (getLinkNext($WP_SINGLE_POST_PAHINATION) ); ?>">
-  <?php echo ( !empty($nextTitle) ? $nextTitle : $wp_LastTitle )?>
+<div id="RightNext" class="sb-next">
+  <a href="<?php echo ($rightNextLink); ?>">
+   <?php echo !empty($nextTitle) ? '→ '.$nextTitle : '→ '.$firstTitle; ?>
   </a>	
 </div>
 </div>	
+
 ```
