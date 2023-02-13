@@ -2,7 +2,7 @@
 WPSPPagination - WP Single Post Pagination alternative solution for drag and drop template builder
 
 ```PHP
- // Main page Require Query 
+  // Main page Require Query 
    $args = [
 	
      'posts_per_page' => 11,
