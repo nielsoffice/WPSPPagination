@@ -5,41 +5,41 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
  // Main page Require Query 
    $args = [
 	
-	'posts_per_page' => 11,
-	'post_type'      => 'blog',
-	'orderby'        => 'date', // must be query by 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  
-        'order'          => 'DESC', // must be DESC
+     'posts_per_page' => 11,
+     'post_type'      => 'blog',
+     'orderby'        => 'date', // must be query by 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  
+     'order'          => 'DESC', // must be DESC
 	  
   ];
   
   // Parent page or main page query 
   $wp_require_query = new WP_Query($args);
    
- // On single page 
- // Usage:
- $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
+  // On single page 
+  // Usage:
+  $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
   
-  'post_type'     => 'post', // for custom post_type ['post','blog','news']
-  'sub_directory' => 'blog', // www.domain.com/sub_directory/post-title
-  'orderby'       => 'date'  // 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  make sure the same as parent query!
+     'post_type'     => 'post', // for custom post_type ['post','blog','news']
+     'sub_directory' => 'blog', // www.domain.com/sub_directory/post-title
+     'orderby'       => 'date'  // 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  make sure the same as parent query!
   
- ]);
+  ]);
  
- // Render the post link
- echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination());
- echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination());
+  // Render the post link
+  echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination());
+  echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination());
 
- // Get post link First and Last
- echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination('get_post_link_first'));
- echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination('get_post_link_last'));
+  // Get post link First and Last
+  echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination('get_post_link_first'));
+  echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_next_pagination('get_post_link_last'));
  
- // Render the post title
- echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title());
- echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title());
+  // Render the post title
+  echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title());
+  echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title());
  
- // Get post title First and Last
- echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_first'));
- echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title('get_post_title_last'));
+  // Get post title First and Last
+  echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_first'));
+  echo ($WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title('get_post_title_last'));
  
 ```
 
