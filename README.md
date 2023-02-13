@@ -106,9 +106,9 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
    $lastTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title('get_post_title_last');
    function getLinkPrev($WP_SINGLE_POST) {
      
-    $sb_left = $WP_SINGLE_POST->get_wp_single_post_previous_pagination();
-    if( !empty($sb_left) ) { return $sb_left;  }
-	  return;
+      $sb_left = $WP_SINGLE_POST->get_wp_single_post_previous_pagination();
+      if( !empty($sb_left) ) { return $sb_left;  }
+      return;
 	
    }
    
@@ -116,21 +116,20 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
    $leftPreviousLink = getLinkPrev($WP_SINGLE_POST_PAHINATION);
    $leftPreviousLink = ( $leftPreviousLink === $cD )? $sb_lastLink : $leftPreviousLink;
 	
-
-  // Next Page configuration Sanitize if the return value is empty!
-  $nextTitle  = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title();
-  $firstTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_first');
-  function getLinkNext($WP_SINGLE_POST) {
-  
-	 $sb_right = $WP_SINGLE_POST->get_wp_single_post_next_pagination();
-     if( !empty($sb_right) ) { return $sb_right; } 
-	 return; 
+   // Next Page configuration Sanitize if the return value is empty!
+   $nextTitle  = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_next_post_title();
+   $firstTitle = $WP_SINGLE_POST_PAHINATION->get_wp_sp_pagination_prev_post_title('get_post_title_first');
+   function getLinkNext($WP_SINGLE_POST) {
+    
+      $sb_right = $WP_SINGLE_POST->get_wp_single_post_next_pagination();
+      if( !empty($sb_right) ) { return $sb_right; } 
+      return; 
 	
-  }
+   }
 
-  $sb_FirsLink   = ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination('get_post_link_first'));
-  $rightNextLink = getLinkNext($WP_SINGLE_POST_PAHINATION);
-  $rightNextLink = ( $rightNextLink === $cD ) ? $sb_FirsLink : $rightNextLink;
+   $sb_FirsLink   = ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination('get_post_link_first'));
+   $rightNextLink = getLinkNext($WP_SINGLE_POST_PAHINATION);
+   $rightNextLink = ( $rightNextLink === $cD ) ? $sb_FirsLink : $rightNextLink;
  	
 ?>
 ```
@@ -142,14 +141,14 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
 <h6 class="sb-heading-label-pagi">Read previous posted article</h6>		
 <div id="leftPrevious" class="sb-previous">
   <a href="<?php echo ($leftPreviousLink); ?>">  
-    <?php echo !empty($prevTitle) ? '← '.$prevTitle : '← '.$lastTitle; ?>
+  <?php echo !empty($prevTitle) ? '← '.$prevTitle : '← '.$lastTitle; ?>
   </a>	
 </div>
 	
 <h6 class="sb-heading-label-pagi">Read next posted article</h6>	
 <div id="RightNext" class="sb-next">
   <a href="<?php echo ($rightNextLink); ?>">
-   <?php echo !empty($nextTitle) ? '→ '.$nextTitle : '→ '.$firstTitle; ?>
+  <?php echo !empty($nextTitle) ? '→ '.$nextTitle : '→ '.$firstTitle; ?>
   </a>	
 </div>
 </div>	
