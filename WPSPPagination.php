@@ -355,8 +355,7 @@
     $post_wp_rand_id           = ( (!empty($order_by) && $order_by === 'rand') ) ?  'id' : $order_by;
     $post_wp_rand              = ( (!empty($order_by) && $order_by === 'rand') ) ? 'rand()': (((!empty($order_by) && $order_by === 'post_author')) ? 'post_date' : $order_by) ;
     $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
-    $post_offset_query         = ( !empty($this->wp_offset) )? 'OFFSET '.$this->wp_offset : null;
-       
+        
     // Post author 
     $wp_post_author_post_prev_next_condition = ( (!empty($order_by) && $order_by === 'post_author') ) ?  '=' : $post_prev_next_condition; 
 
@@ -374,7 +373,7 @@
     $wp_post_query_ .= " $post_date_query_ "; 
     $wp_post_query_ .=   $post_type_query_array;
     $wp_post_query_ .= " ORDER BY $post_wp_rand ";
-    $wp_post_query_ .= " $post_prev_next_order LIMIT 1 $post_offset_query";
+    $wp_post_query_ .= " $post_prev_next_order LIMIT 1 ";
      
     return $wp_post_query_;
 
@@ -389,15 +388,14 @@
   
     $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
     $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
-    $post_offset_query         = ( !empty($this->wp_offset) )? 'OFFSET '.$this->wp_offset : null;
-
+  
     $wp_first_query  = "";
     $wp_first_query .= " SELECT $post_wp_postRequest_title ";
     $wp_first_query .= " FROM wp_posts ";
     $wp_first_query .= " WHERE post_status = 'publish' ";
     $wp_first_query .= " $post_type_query_array ";    
     $wp_first_query .= " ORDER BY  $order_by ";
-    $wp_first_query .= " DESC LIMIT 1 $post_offset_query";
+    $wp_first_query .= " DESC LIMIT 1";
 
     return $wp_first_query;
 
@@ -412,15 +410,14 @@
   
     $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
     $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
-    $post_offset_query         = ( !empty($this->wp_offset) )?  'OFFSET '.$this->wp_offset : null;
-
+   
     $wp_first_query  = "";
     $wp_first_query .= " SELECT $post_wp_postRequest_title ";
     $wp_first_query .= " FROM wp_posts ";
     $wp_first_query .= " WHERE post_status = 'publish' ";
     $wp_first_query .= " $post_type_query_array ";    
     $wp_first_query .= " ORDER BY  $order_by ";
-    $wp_first_query .= " ASC LIMIT 1 $post_offset_query";
+    $wp_first_query .= " ASC LIMIT 1";
 
     return $wp_first_query;
 
