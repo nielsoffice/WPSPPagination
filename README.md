@@ -2,13 +2,6 @@
 WPSPPagination - WP Single Post Pagination alternative solution for drag and drop template builder
 
 ```PHP
-    $args = [
-	
-     'offset' => 1 // @since v1.3  
-  ];
-```
-
-```PHP
   // Main page Require Query 
    $args = [
 	
