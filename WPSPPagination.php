@@ -97,7 +97,6 @@
      $this->wp_request_post_type = $args['post_type'] ?? [];
      $this->wp_sub_directory = $args['sub_directory'] ?? '';    
      $this->wp_orderby = $args['orderby'] ?? '';
-     $this->wp_offset = $args['offset'] ?? '';
 
    }
 
@@ -121,7 +120,7 @@
 
       $wp_request = $wpdb->get_results($this->wp_pagination_query_post_request_prev($post->post_type,$this->wp_set_order_by_link_post_first() ));
       $wp_request = json_decode(json_encode($wp_request), true);	
-      $wp_request = $wp_request[0]['post_name'];
+      $wp_request = $wp_request[0]['post_name']?? '';
 
       $currentURL = $this->wp_domain_sub_directory( $this->wp_sub_directory );
       $currentURL .= '/';
@@ -133,7 +132,7 @@
 
       $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query(false, false ));
       $wp_request = json_decode(json_encode($wp_request), true);	
-      $wp_request = $wp_request[0]['post_name'];
+      $wp_request = $wp_request[0]['post_name']?? '';
 
       $currentURL = $this->wp_domain_sub_directory( $this->wp_sub_directory );
       $currentURL .= '/';
@@ -165,7 +164,7 @@
 
      $wp_request = $wpdb->get_results($this->wp_pagination_query_post_request_next($post->post_type,$this->wp_set_order_by_link_post_first()));
      $wp_request = json_decode(json_encode($wp_request), true);	
-     $wp_request = $wp_request[0]['post_name'];
+     $wp_request = $wp_request[0]['post_name']?? '';
 
      $currentURL = $this->wp_domain_sub_directory( $this->wp_sub_directory );
      $currentURL .= '/';
@@ -177,7 +176,7 @@
 
      $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query( true , false));
      $wp_request = json_decode(json_encode($wp_request), true);	
-     $wp_request = $wp_request[0]['post_name'];
+     $wp_request = $wp_request[0]['post_name']?? '';
 
      $currentURL = $this->wp_domain_sub_directory( $this->wp_sub_directory );
      $currentURL .= '/';
@@ -222,7 +221,7 @@
 
      $wp_request = $wpdb->get_results($this->wp_pagination_query_post_request_prev($post->post_type,$this->wp_set_order_by_link_post_first(), true ));
      $wp_request = json_decode(json_encode($wp_request), true);	
-     $wp_request = $wp_request[0]['post_title'];
+     $wp_request = $wp_request[0]['post_title']?? '';
 
      return ($wp_request);
      
@@ -230,7 +229,7 @@
   
       $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query(false, true));
       $wp_request = json_decode(json_encode($wp_request), true);	
-      $wp_request = $wp_request[0]['post_title'];
+      $wp_request = $wp_request[0]['post_title']?? '';
 
       return $wp_request;
 
@@ -258,7 +257,7 @@
   
        $wp_request = $wpdb->get_results($this->wp_pagination_query_post_request_next($post->post_type,$this->wp_set_order_by_link_post_first(), true ));
        $wp_request = json_decode(json_encode($wp_request), true);	
-       $wp_request = $wp_request[0]['post_title'];
+       $wp_request = $wp_request[0]['post_title']?? '';
          
        return ($wp_request);
   
@@ -266,7 +265,7 @@
   
      $wp_request = $wpdb->get_results($this->wp_sp_pagination_modal_pagination_query(true, true));
      $wp_request = json_decode(json_encode($wp_request), true);	
-     $wp_request = $wp_request[0]['post_title'];
+     $wp_request = $wp_request[0]['post_title']?? '';
   
      return $wp_request; 
 
