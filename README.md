@@ -15,8 +15,9 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
   // Parent page or main page query 
   $wp_require_query = new WP_Query($args);
    
-  // On single page 
-  // Usage:
+   
+  // On single page Cutom Post Type CPT
+  // Usage: @since v1.0
   $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
   
      'post_type'     => 'post', // for custom post_type ['post','blog','news']
@@ -24,6 +25,27 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
      'orderby'       => 'date'  // 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  make sure the same as parent query!
   
   ]);
+  
+  // On single page post type default by terms
+  /*
+    For instance you have a newsletter and blog category you post them using default post type in different page?
+    Let say you will use the category for layout
+    category-newsletter.php
+    category-blog.php 
+    Both of them having different approach or layout then you wish to having pagination which only return the value 
+    whose terms is "newsLetter" in the other hands you wants to return the pagination for only who have terms "blog" 
+    This is the answer WP Single Post Pagination @since  v1.3!
+  */ 
+  // Usage: @since v1.3
+  $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
+  
+     'post_type'     => 'post', // for custom post_type ['post','blog','news']
+     'byterms'       => 'newsLetter', // If you use single post type and wants to display pagination by terms you can use this
+     'sub_directory' => 'blog', // www.domain.com/sub_directory/post-title
+     'orderby'       => 'date'  // 'date' OR 'id' OR 'author' OR 'type' OR  'rand' OR 'comment_count'  make sure the same as parent query!
+  
+  ]);
+ 
  
   // Render the post link
   echo ($WP_SINGLE_POST_PAHINATION->get_wp_single_post_previous_pagination());
