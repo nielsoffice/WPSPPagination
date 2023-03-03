@@ -348,18 +348,18 @@
   private function wp_pagination_order_by_request( $post_order_by_query, $order_by,  $left = false , $wp_postRequest = false ) {
       
     // controller !
-    $post_type_query = is_array($this->wp_request_post_type ) ? $this->wp_request_post_type : $this->wp_request_post_type;
-	   $wp_byterms	     = is_array($this->wp_byterms ) ? $this->wp_byterms : $this->wp_byterms;
+    $post_type_query = is_array($this->wp_request_post_type ) ? $this->wp_request_post_type : $this->wp_request_post_type; 
+    $wp_byterms	     = is_array($this->wp_byterms ) ? $this->wp_byterms : $this->wp_byterms;
     $post_prev_next_condition  = (!$left === false) ? '<' : '>';
     $post_prev_next_order      = (!$left === false) ? 'DESC' : 'ASC';
     $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
     $post_wp_rand_id           = ( (!empty($order_by) && $order_by === 'rand') ) ?  'id' : $order_by;
     $post_wp_rand              = ( (!empty($order_by) && $order_by === 'rand') ) ? 'rand()': (((!empty($order_by) && $order_by === 'post_author')) ? 'post_date' : $order_by) ;
     
-	   // OR POST TYPE
-	   $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
-	   // BY TERMS IF ONLY POST
-	   $wp_byterms_array          = implode('', $this->wp_byterms_is_array($wp_byterms)[0]);
+    // OR POST TYPE
+    $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
+    // BY TERMS IF ONLY POST
+    $wp_byterms_array          = implode('', $this->wp_byterms_is_array($wp_byterms)[0]);
         
     // Post author 
     $wp_post_author_post_prev_next_condition = ( (!empty($order_by) && $order_by === 'post_author') ) ?  '=' : $post_prev_next_condition; 
@@ -374,19 +374,19 @@
     $wp_post_query_ .= " SELECT $post_wp_postRequest_title ";
     $wp_post_query_ .= " FROM wp_posts ";
     
-	  // Do this if we use single post type and return by terms if not the post will mixed !  @since v1.3
-	  if( !empty( $this->wp_byterms ) ) {
-	   $wp_post_query_ .= " LEFT JOIN wp_term_relationships ON (wp_posts.ID = wp_term_relationships.object_id) ";
-	   $wp_post_query_ .= " LEFT JOIN wp_term_taxonomy ON (wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id) ";
-	   $wp_post_query_ .= " LEFT JOIN wp_terms ON (wp_term_taxonomy.term_taxonomy_id = wp_terms.term_id) ";
-	  }
+    // Do this if we use single post type and return by terms if not the post will mixed !  @since v1.3
+    if( !empty( $this->wp_byterms ) ) {
+      $wp_post_query_ .= " LEFT JOIN wp_term_relationships ON (wp_posts.ID = wp_term_relationships.object_id) ";
+      $wp_post_query_ .= " LEFT JOIN wp_term_taxonomy ON (wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id) ";
+      $wp_post_query_ .= " LEFT JOIN wp_terms ON (wp_term_taxonomy.term_taxonomy_id = wp_terms.term_id) ";
+    }
 
     $wp_post_query_ .= " WHERE post_status = 'publish' ";
 
-	   // Do this if we use single post type and return by terms if not the post will mixed ! @since v1.3
+    // Do this if we use single post type and return by terms if not the post will mixed ! @since v1.3
     if( !empty( $this->wp_byterms )) { $wp_post_query_ .= $wp_byterms_array; }
     
-	   $wp_post_query_ .= " $wp_post_author_post_prevnextcondition ";
+    $wp_post_query_ .= " $wp_post_author_post_prevnextcondition ";
     $wp_post_query_ .= " $post_date_query_ "; 
     $wp_post_query_ .=   $post_type_query_array;
     $wp_post_query_ .= " ORDER BY $post_wp_rand ";
