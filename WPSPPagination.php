@@ -58,10 +58,10 @@
    private $wp_orderby;
 
   /**
-   * Defined: @var @property wp_offset
+   * Defined: @var @property wp_byterms
    * @since 1.3 
    * @since 02.16.2023 **/
-  private $wp_offset;
+  private $wp_byterms;
 
  /**
    * Defined: @var @property ORDER_REQUEST
@@ -94,9 +94,10 @@
    public function __construct( $args = [] )
    {
  
-     $this->wp_request_post_type = $args['post_type'] ?? [];
+     $this->wp_request_post_type = $args['post_type'] ?? '';
      $this->wp_sub_directory = $args['sub_directory'] ?? '';    
      $this->wp_orderby = $args['orderby'] ?? '';
+     $this->wp_byterms = $args['byterms'] ?? '';
 
    }
 
@@ -346,14 +347,19 @@
     * @since 02.10.2022 **/
   private function wp_pagination_order_by_request( $post_order_by_query, $order_by,  $left = false , $wp_postRequest = false ) {
       
-    // sanitation !
+    // controller !
     $post_type_query = is_array($this->wp_request_post_type ) ? $this->wp_request_post_type : $this->wp_request_post_type;
+	   $wp_byterms	     = is_array($this->wp_byterms ) ? $this->wp_byterms : $this->wp_byterms;
     $post_prev_next_condition  = (!$left === false) ? '<' : '>';
     $post_prev_next_order      = (!$left === false) ? 'DESC' : 'ASC';
     $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
     $post_wp_rand_id           = ( (!empty($order_by) && $order_by === 'rand') ) ?  'id' : $order_by;
     $post_wp_rand              = ( (!empty($order_by) && $order_by === 'rand') ) ? 'rand()': (((!empty($order_by) && $order_by === 'post_author')) ? 'post_date' : $order_by) ;
-    $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
+    
+	   // OR POST TYPE
+	   $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
+	   // BY TERMS IF ONLY POST
+	   $wp_byterms_array          = implode('', $this->wp_byterms_is_array($wp_byterms)[0]);
         
     // Post author 
     $wp_post_author_post_prev_next_condition = ( (!empty($order_by) && $order_by === 'post_author') ) ?  '=' : $post_prev_next_condition; 
@@ -367,8 +373,20 @@
     $wp_post_query_  = "";
     $wp_post_query_ .= " SELECT $post_wp_postRequest_title ";
     $wp_post_query_ .= " FROM wp_posts ";
+    
+	  // Do this if we use single post type and return by terms if not the post will mixed !  @since v1.3
+	  if( !empty( $this->wp_byterms ) ) {
+	   $wp_post_query_ .= " LEFT JOIN wp_term_relationships ON (wp_posts.ID = wp_term_relationships.object_id) ";
+	   $wp_post_query_ .= " LEFT JOIN wp_term_taxonomy ON (wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id) ";
+	   $wp_post_query_ .= " LEFT JOIN wp_terms ON (wp_term_taxonomy.term_taxonomy_id = wp_terms.term_id) ";
+	  }
+
     $wp_post_query_ .= " WHERE post_status = 'publish' ";
-    $wp_post_query_ .= " $wp_post_author_post_prevnextcondition ";
+
+	   // Do this if we use single post type and return by terms if not the post will mixed ! @since v1.3
+    if( !empty( $this->wp_byterms )) { $wp_post_query_ .= $wp_byterms_array; }
+    
+	   $wp_post_query_ .= " $wp_post_author_post_prevnextcondition ";
     $wp_post_query_ .= " $post_date_query_ "; 
     $wp_post_query_ .=   $post_type_query_array;
     $wp_post_query_ .= " ORDER BY $post_wp_rand ";
@@ -496,6 +514,37 @@
       } else { return [ [ "AND post_type = '". $post_type_query ."' " ] ]; }
 
    }
+
+  /** 
+    * Defined : Process Single post type return by terms 
+   	* for intance you have a blog and new is your post if you want to return the pagination only those newLetter 
+	   * you need to use this by terms ! so in yout single page it will return to you by terms NOT mixed or by CPT
+    * @method Private wp_post_type_is_array
+    * @since v1.5 
+    * @since 03.04.2023 **/
+   private function wp_byterms_is_array($wp_byterms) {
+
+  	$wp_byterms_ = [];
+
+	  if(is_array($wp_byterms)) {
+
+	  foreach($wp_byterms as $post => $term ) {
+
+	   if($post === 0) {
+		  $wp_byterms_[]= "AND wp_terms.slug = '". $term ."'";
+		  continue;
+	   }  
+	   else { $wp_byterms_[]= " OR wp_terms.slug = '". $term ."'"; }
+	
+	 }
+
+	 return [ $wp_byterms_ ];
+
+	} else { return [ [ "AND wp_terms.slug = '". $wp_byterms ."' " ] ]; }
+
+ }
+
+   
 
   /** 
     * Defined : Processing pagination title loop
