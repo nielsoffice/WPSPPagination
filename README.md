@@ -35,6 +35,11 @@ WPSPPagination - WP Single Post Pagination alternative solution for drag and dro
     Both of them having different approach or layout then you wish to having pagination which only return the value 
     whose terms is "newsLetter" in the other hands you wants to return the pagination for only who have terms "blog" 
     This is the answer WP Single Post Pagination @since  v1.3!
+    
+     *For main query make sure your post archive display as by category name
+     // Parent page or main page query 
+     $wp_require_query = new WP_Query([ 'cat' => 'newsLetter' ]);
+
   */ 
   // Usage: @since v1.3
   $WP_SINGLE_POST_PAHINATION = new WPSPPagination([
