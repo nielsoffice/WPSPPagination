@@ -5,7 +5,7 @@
  *
  * MIT License
  *
- * WP Single Post Pagination v1.2 free software: you can redistribute it and/or modify.
+ * WP Single Post Pagination v1.3 free software: you can redistribute it and/or modify.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
