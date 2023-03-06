@@ -63,6 +63,8 @@
    * @since 02.16.2023 **/
   private $wp_byterms;
 
+  private $wp_valid_terms;
+
  /**
    * Defined: @var @property ORDER_REQUEST
    * @since 1.0.0.0 
@@ -349,7 +351,7 @@
       
     // controller !
     $post_type_query = is_array($this->wp_request_post_type ) ? $this->wp_request_post_type : $this->wp_request_post_type; 
-    $wp_byterms	     = is_array($this->wp_byterms ) ? $this->wp_byterms : $this->wp_byterms;
+    $this->wp_valid_terms = is_array($this->wp_byterms ) ? $this->wp_byterms : $this->wp_byterms;
     $post_prev_next_condition  = (!$left === false) ? '<' : '>';
     $post_prev_next_order      = (!$left === false) ? 'DESC' : 'ASC';
     $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
@@ -359,7 +361,7 @@
     // OR POST TYPE
     $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
     // BY TERMS IF ONLY POST
-    $wp_byterms_array          = implode('', $this->wp_byterms_is_array($wp_byterms)[0]);
+    $wp_byterms_array          = implode('', $this->wp_byterms_is_array($this->wp_valid_terms)[0]);
         
     // Post author 
     $wp_post_author_post_prev_next_condition = ( (!empty($order_by) && $order_by === 'post_author') ) ?  '=' : $post_prev_next_condition; 
@@ -375,11 +377,7 @@
     $wp_post_query_ .= " FROM wp_posts ";
     
     // Do this if we use single post type and return by terms if not the post will mixed !  @since v1.3
-    if( !empty( $this->wp_byterms ) ) {
-      $wp_post_query_ .= " LEFT JOIN wp_term_relationships ON (wp_posts.ID = wp_term_relationships.object_id) ";
-      $wp_post_query_ .= " LEFT JOIN wp_term_taxonomy ON (wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id) ";
-      $wp_post_query_ .= " LEFT JOIN wp_terms ON (wp_term_taxonomy.term_taxonomy_id = wp_terms.term_id) ";
-    }
+    $wp_post_query_ .= $this->get_terms_join_query();
 
     $wp_post_query_ .= " WHERE post_status = 'publish' ";
 
@@ -405,12 +403,15 @@
   
     $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
     $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
+    $wp_byterms_array          = implode('', $this->wp_byterms_is_array($this->wp_valid_terms)[0]);
   
     $wp_first_query  = "";
     $wp_first_query .= " SELECT $post_wp_postRequest_title ";
     $wp_first_query .= " FROM wp_posts ";
+    $wp_first_query .= $this->get_terms_join_query();
     $wp_first_query .= " WHERE post_status = 'publish' ";
     $wp_first_query .= " $post_type_query_array ";    
+    $wp_first_query .= " $wp_byterms_array "; 
     $wp_first_query .= " ORDER BY  $order_by ";
     $wp_first_query .= " DESC LIMIT 1";
 
@@ -427,16 +428,32 @@
   
     $post_wp_postRequest_title = (!$wp_postRequest === false) ? 'post_title' : 'post_name';
     $post_type_query_array     = implode('', $this->wp_post_type_is_array($post_type_query)[0]);
+    $wp_byterms_array          = implode('', $this->wp_byterms_is_array($this->wp_valid_terms)[0]);
    
     $wp_first_query  = "";
     $wp_first_query .= " SELECT $post_wp_postRequest_title ";
     $wp_first_query .= " FROM wp_posts ";
+    $wp_first_query .=  $this->get_terms_join_query();
     $wp_first_query .= " WHERE post_status = 'publish' ";
-    $wp_first_query .= " $post_type_query_array ";    
+    $wp_first_query .= " $post_type_query_array "; 
+    $wp_first_query .= " $wp_byterms_array ";   
     $wp_first_query .= " ORDER BY  $order_by ";
     $wp_first_query .= " ASC LIMIT 1";
 
     return $wp_first_query;
+
+  }
+
+  private function get_terms_join_query() {
+
+    $wp_first_query = "";
+    if( !empty( $this->wp_byterms ) ) {
+      $wp_first_query .= " LEFT JOIN wp_term_relationships ON (wp_posts.ID = wp_term_relationships.object_id) ";
+      $wp_first_query .= " LEFT JOIN wp_term_taxonomy ON (wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id) ";
+      $wp_first_query .= " LEFT JOIN wp_terms ON (wp_term_taxonomy.term_taxonomy_id = wp_terms.term_id) ";
+    }
+
+    return($wp_first_query);
 
   }
 
