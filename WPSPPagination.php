@@ -444,6 +444,11 @@
 
   }
 
+   /** 
+    * Defined : Query get_terms_join_query
+    * @method Private get_terms_join_query
+    * @since v1.0 
+    * @since 03.07.2023 **/ 
   private function get_terms_join_query() {
 
     $wp_first_query = "";
