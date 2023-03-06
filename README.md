@@ -1,5 +1,6 @@
 # WPSPPagination
-WPSPPagination - WP Single Post Pagination alternative solution for drag and drop template builder
+WPSPPagination - WP Single Post Pagination alternative solution for drag and drop template builder <br />
+Activated ! Multiple Custom post type and terms @since v1.3 !
 
 ```PHP
   // Main page Require Query 
